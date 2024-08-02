@@ -14,16 +14,13 @@ public class Libro {
     private Long Id;
     @Column(unique = true)
     private String titulo;
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(
-        name = "libro_autor",
-        joinColumns = @JoinColumn(name = "libro_id"),
-        inverseJoinColumns = @JoinColumn(name = "autor_id")
-    )
-    private List<Autor> autores;
-    @ElementCollection
     private List<String> idiomas;
     private Double numeroDeDescargas;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "libro_autor",
+            joinColumns = @JoinColumn(name = "libro_id"),
+            inverseJoinColumns = @JoinColumn(name = "autor_id"))
+    private List<Autor> autores;
 
     public Libro() {
     }

@@ -5,6 +5,7 @@ import com.alurachallenge.literalura.repository.AutorRepository;
 import com.alurachallenge.literalura.repository.BookRepository;
 import com.alurachallenge.literalura.service.ConsumoAPI;
 import com.alurachallenge.literalura.service.ConvierteDatos;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.*;
@@ -18,12 +19,14 @@ public class Principal {
     private ConvierteDatos conversor = new ConvierteDatos();
     private List<DatosLibro> datosLibros = new ArrayList<>();
     private BookRepository repositorio;
+    @Autowired
     private AutorRepository autorRepository;
     private List<Libro> libros;
     private Optional<Libro> libroBuscado;
 
-    public Principal(BookRepository repository) {
+    public Principal(BookRepository repository, AutorRepository autorRepository) {
         this.repositorio = repository;
+        this.autorRepository = autorRepository;
     }
 
     public void muestraElMenu() {
@@ -129,7 +132,7 @@ public class Principal {
 
                 Libro libro = new Libro(datos);
                 libro.setAutores(autores); // Asignar los autores verificados/persistidos al libro
-
+                System.out.println(libro);
                 repositorio.save(libro);
                 System.out.println("Libro guardado exitosamente: " + datos);
             } else {
